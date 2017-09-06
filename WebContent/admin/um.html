@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" type="text/css"
+	href="/EshopProject/admin/easyui/themes/default/easyui.css">
+
+<link rel="stylesheet" type="text/css"
+	href="/EshopProject/admin/easyui/themes/icon.css" />
+<script src="/EshopProject/admin/easyui/jquery.min.js"></script>
+<script src="/EshopProject/admin/easyui/jquery.easyui.min.js"
+	type="text/javascript"></script>
+<script src="/EshopProject/admin/easyui/locale/easyui-lang-zh_CN.js"
+	type="text/javascript"></script>
+<script type="text/javascript" src="js/usermanager.js"></script>
+<style type="text/css">
+
+.adduser{
+	width:300px;
+	margin: 50px auto;
+	
+}
+.adduser td{
+	padding:5px;
+}
+ #search-top{
+	 float: right; 
+	 padding-left: 200px;
+} 
+</style>
+</head>
+<body>
+<div style="width: 500px">
+
+用户管理
+<div id="search-top"  title="搜索用户">
+		
+		<input type="text" class="easyui-validatebox easyui-textbox" id="ucontext"
+						name="ucontext"
+						data-options="required:true" />
+		<a id="search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</a>
+		
+	</div>
+</div>
+	
+	
+	<hr />
+	<table id="dg"></table>
+	<div id="dialog" class="easyui-dialog" title="添加用户"
+		style="width: 400px; height: 500px"
+		data-options="closed:true,buttons:'#bb',collapsible:true,iconCls:'icon-save',resizable:true,modal:true,resizable:true">
+
+		<form action="" method="post" id="f1" name="f1">
+			<table class="adduser">
+
+				<tr>
+					<td>邮箱</td>
+					<td><input type="text" id="uemail"
+						class="easyui-validatebox easyui-textbox" name="uemail"
+						data-options="required:true,missingMessage:'请输入邮箱',validType:'email'" /></td>
+				</tr>
+				<tr>
+					<td>帐号</td>
+					<td><input type="text"
+						class="easyui-validatebox easyui-textbox" id="uname"
+						name="uname"
+						data-options="required:true" /></td>
+				</tr>
+				<tr>
+					<td>密码</td>
+					<td><input type="password"
+						class="easyui-validatebox easyui-textbox" id="password"
+						name="password"
+						data-options="required:true" /></td>
+				</tr>
+				<tr>
+					<td>性别</td>
+					<td><select id="usex" class="easyui-combobox" name="usex"
+							style="width: 200px;">
+							<option value="男">男</option>
+							<option value="女">女</option>
+						</select>
+					</td>
+				</tr>
+
+				<tr>
+					<td>地址</td>
+					<td><input type="text"
+						class="easyui-validatebox easyui-textbox" id="uaddress"
+						name="uaddress"
+						data-options="required:true" /></td>
+				</tr>
+				<tr>
+					<td>手机号码</td>
+					<td><input type="text"
+						class="easyui-validatebox easyui-textbox" id="utel"
+						name="utel"
+						data-options="required:true" /></td>
+				</tr>
+			</table>
+		</form>
+		<div id="bb">
+			<!-- <a id="save" href="#" class="easyui-linkbutton"
+				data-options="iconCls:'icon-save'">保存</a> <a id="btn" href="#"
+				class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">取消</a> -->
+		</div>
+
+
+	</div>
+	<!-- <div id="search-top" class="easyui-dialog" title="搜索用户"
+		style="width:300px;height:200px"
+		data-options="closed:true,collapsible:true,iconCls:'icon-save',resizable:true,modal:true,resizable:true">
+		
+		<input type="text" class="easyui-validatebox easyui-textbox" id="ucontext"
+						name="ucontext"
+						data-options="required:true" />
+		<a id="search" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</a>
+		
+	</div> -->
+</body>
+</html>

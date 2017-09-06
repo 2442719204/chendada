@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" type="text/css"
+	href="/EshopProject/admin/easyui/themes/default/easyui.css">
+
+<link rel="stylesheet" type="text/css"
+	href="/EshopProject/admin/easyui/themes/icon.css" />
+<link rel="stylesheet" type="text/css"
+	href="/EshopProject/admin/css/Huploadify.css" />
+<script src="/EshopProject/admin/easyui/jquery.min.js"></script>
+<script src="/EshopProject/admin/js/jquery.Huploadify.js"></script>
+<script src="/EshopProject/admin/easyui/jquery.easyui.min.js"
+	type="text/javascript"></script>
+<script src="/EshopProject/admin/easyui/locale/easyui-lang-zh_CN.js"
+	type="text/javascript"></script>
+<script type="text/javascript" src="js/goodsmanager.js"></script>
+<style type="text/css">
+	.addgoods{
+		margin: 60px auto;
+	}
+	.addgoods td{
+		width:80px;
+		padding: 10px;
+	}
+</style>
+</head>
+	<body>
+		商品管理
+		<hr />
+		<input id="cc" name="goods" >  
+		<table id="dg"></table>  
+		<div id="dialog" class="easyui-dialog" title="添加商品"
+		style="width: 400px; height: 500px"
+		data-options="closed:true,buttons:'#bb',collapsible:true,iconCls:'icon-save',resizable:true,modal:true,resizable:true">
+		<form action="" method="post" id="f1" name="f1">
+			<table class="addgoods">
+				<tr>
+					<td>商品编号</td>
+					<td><input type="text"
+						class="easyui-validatebox easyui-textbox" id="gid"
+						name="gid"
+						data-options="required:true,missingMessage:'请输入帐号'" /></td>
+				</tr>
+			
+				<tr>
+					<td>标题</td>
+					<td><input type="text"
+						class="easyui-validatebox easyui-textbox" id="gtitle"
+						name="gtitle"
+						data-options="required:true,missingMessage:'请输入帐号'" /></td>
+				</tr>
+				<tr>
+					<td>作者</td>
+					<td><input type="text"
+						class="easyui-validatebox easyui-textbox" id="gauthor"
+						name="gauthor"
+						data-options="required:true" /></td>
+				</tr>
+				<tr>
+					<td>售价</td>
+					<td><input type="text"
+						class="easyui-validatebox easyui-textbox" id="gsaleprice"
+						name="gsaleprice"
+						data-options="required:true" /></td>
+				</tr>
+				<tr>
+					<td>进价</td>
+					<td><input type="text"
+						class="easyui-validatebox easyui-textbox" id="ginprice"
+						name="ginprice"
+						data-options="required:true" /></td>
+				</tr>
+			
+				<tr>
+					<td>图片</td>
+					<td><input type="text"
+						class="easyui-validatebox easyui-textbox" id="gimg"
+						name="gimg"
+						data-options="required:true" />
+					</td>
+				</tr>
+
+				<tr>
+					<td>点击量</td>
+					<td><input type="text"
+						class="easyui-validatebox easyui-textbox" id="gclicks"
+						name="gclicks"
+						data-options="required:true" /></td>
+				</tr>
+				<tr>
+					<td>类别编号</td>
+					<td><input type="text"
+						class="easyui-validatebox easyui-textbox" id="cid"
+						name="cid"
+						data-options="required:true" /></td>
+				</tr>
+				<tr>
+					<td>出版社编号</td>
+					<td><input type="text"
+						class="easyui-validatebox easyui-textbox" id="pid"
+						name="pid"
+						data-options="required:true" /></td>
+				</tr>
+				<tr>
+					<td>商品描述</td>
+					<td><input type="text" 
+						class="easyui-validatebox easyui-textbox" id="gdesc"
+						name="gdesc"
+						data-options="required:true" /></td>
+				</tr>
+			</table>
+		</form>
+		<div id="bb">
+			<a id="save" href="#" class="easyui-linkbutton"
+				data-options="iconCls:'icon-save'">保存</a> <a id="btn" href="#"
+				class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">取消</a>
+		</div>
+
+
+	</div>
+	<div id="dlgImg" class="easyui-dialog" title="预览图片"
+		style="width: 300px; height: 400px"
+		data-options="closed:true,collapsible:true,resizable:true,modal:true,resizable:true">
+		<img alt="暂无图片" src="" id="showImg" style="width: 200px;height:300px;margin: 30px 30px">
+	</div>
+	
+	
+	<img src="" alt="" class="cardImg" id="imgid"/><!--预览图片-->  
+<div id="fileid"></div><!--图片上传按钮--> 
+<script type="text/javascript">
+function uploadInit(domName,domPic){  
+    $("#"+domName).Huploadify({  
+        auto:true,  
+        fileTypeExts:'*.*',  
+        multi:false,  
+        fileObjName:'Filedata',  
+        fileSizeLimit:99999999999,  
+        showUploadedPercent:false,  
+        buttonText:'上传',  
+        uploader:'/EshopProject/admin/images',  
+        onUploadSuccess:function(file,data){  
+            var Data=JSON.parse(data);  
+            if(Data.success==true){  
+                 $("#"+domPic).attr("src",Data.result);  
+                param.uploadsuccess(Data.result);  
+            }else{  
+                 jQuery.longhz.alert(Data.resultDes);  
+            }  
+        },  
+        onUploadError:function(file,response){  
+            jQuery.longhz.alert("上传失败!");  
+        }  
+    });  
+      
+}  
+//调用公共方法  
+uploadInit("fileid","imgid");  
+</script>
+	</body>
+</html>

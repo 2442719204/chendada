@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css"
+	href="/EshopProject/admin/easyui/themes/default/easyui.css">
+
+<link rel="stylesheet" type="text/css"
+	href="/EshopProject/admin/easyui/themes/icon.css" />
+<script src="/EshopProject/admin/easyui/jquery.min.js"></script>
+<script src="/EshopProject/admin/easyui/jquery.easyui.min.js"
+	type="text/javascript"></script>
+<script src="/EshopProject/admin/easyui/locale/easyui-lang-zh_CN.js"
+	type="text/javascript"></script>
+	<script type="text/javascript" src="js/jquery.edatagrid.js"></script>
+	<script type="text/javascript">
+    $(function(){
+        $("#tt").edatagrid({
+            title:'Load Data',//标题
+            idField:'id',
+            iconCls:'icon-save',//标题左边的图标
+            fitColumns:true,//固定列
+            rownumbers:true,//显示行号
+            showFooter:true,//显示行脚
+            pagination:true,
+            toolbar:'#tb',//定义工具栏
+            singleSelect:true,
+            onHeaderContextMenu: function(e, field){ //设置语境菜单   可以动态控制显示那些列不显示那些列
+                e.preventDefault();
+                if (!cmenu){
+                    createColumnMenu();
+                }
+                cmenu.menu('show', {
+                    left:e.pageX,
+                    top:e.pageY
+                });
+            }
+        });
+        $('#tt').edatagrid({
+        	url: '/EshopProject/userController.do?type=list',
+        	saveUrl:'/EshopProject/userController.do?type=add',
+        	updateUrl:'/EshopProject/userController.do?type=update',
+        	destroyUrl: '/EshopProject/userController.do?type=remove'
+        });
+    });
+    /**
+        语境菜单开始
+    */
+    var cmenu;
+    function createColumnMenu(){
+        cmenu = $('<div/>').appendTo('body');
+        cmenu.menu({
+            onClick: function(item){
+                if (item.iconCls == 'icon-ok'){
+                    $('#tt').datagrid('hideColumn', item.name);
+                    cmenu.menu('setIcon', {
+                        target: item.target,
+                        iconCls: 'icon-empty'
+                    });
+                } else {
+                    $('#tt').datagrid('showColumn', item.name);
+                    cmenu.menu('setIcon', {
+                        target: item.target,
+                        iconCls: 'icon-ok'
+                    });
+                }
+            }
+        });
+        var fields = $('#tt').datagrid('getColumnFields');
+        for(var i=0; i<fields.length; i++){
+            var field = fields[i];
+            var col = $('#tt').datagrid('getColumnOption', field);
+            cmenu.menu('appendItem', {
+                text: col.title,
+                name: field,
+                iconCls: 'icon-ok'
+            });
+        }
+    }
+    /**
+        语境菜单结束
+    */
+    
+    function editing(){
+        var row = $('#tt').datagrid('getSelected');
+        if (row){
+            /*
+                默认情况下row.productStartDate是毫秒值，而修改的时候需要2011/11/11这样的字符串，所以在此转换
+            */
+            var date = new Date(row.productStartDate);
+            row.productStartDate = (date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear();
+            var index = $("#tt").edatagrid("getRowIndex",row);
+            $('#tt').edatagrid('editRow',index);
+        }
+    }
+    
+    function formatDate(val,row){
+        if(val){
+            var date = new Date(val);
+            var y = date.getFullYear();
+            var m = date.getMonth()+1;
+            var d = date.getDate();
+            return y+'年'+(m<10?('0'+m):m)+'月'+(d<10?('0'+d):d)+"日";
+        }
+        return "";
+    }
+</script>
+</head>
+<body>
+    <div style="position:relative;margin-top:60px;margin-left:100px;">
+        <h1>权限设置</h1>
+        <div id="tb">
+	       <!--  <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:$('#tt').edatagrid('addRow')">AddRow</a> -->
+			<a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:$('#tt').edatagrid('saveRow')">保存设置</a>
+			<!-- <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" plain="true" onclick="javascript:$('#tt').edatagrid('cancelRow')">CancelRow</a>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="javascript:$('#tt').edatagrid('destroyRow')">destroyRow</a> -->
+        </div>
+        <table id="tt" style="width:1000px;height:400px"
+			title="Editable DataGrid">
+            <thead>
+                <tr>
+                <!-- <th field="userid" width="100" editor="{type:'validatebox',options:{required:true}}">userid</th>
+				<th field="email" width="100" editor="text">email</th>
+				<th field="loginid" width="100" align="right" editor="{type:'numberbox',options:{precision:1}}">loginid</th>
+				<th field="upassword" width="100" align="right" editor="numberbox">upassword</th>
+				<th field="usex" width="150" editor="text">usex</th>
+				<th field="uaddress" width="100" editor="text">uaddress</th>
+				<th field="utel" width="100" editor="text">utel</th> -->
+				<th field="userid" width="100" editor="{type:'validatebox',options:{required:true}}">userid</th>
+				<th field="uloginid" width="100" editor="text">用户编号</th>
+				<th field="ustateid" width="100" editor="text">状态编号</th>
+				<th field="uroleid" width="100" editor="text">角色编号</th>
+                </tr>
+            </thead>
+        </table>
+        
+    </div>
+</body>
+</html>
